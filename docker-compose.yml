@@ -13,7 +13,7 @@ services:
 
   backend:
     build:
-      context: ./examensarbete-niklasodell-java23
+      context: .
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
@@ -25,17 +25,6 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mariadb://database:3306/bookwishlist
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
-
-  frontend:
-    build:
-      context: ./examensarbete-niklasodell-java23-fe
-      dockerfile: Dockerfile
-    ports:
-      - "3000:80"
-    depends_on:
-      - backend
-    networks:
-      - app-network
 
 networks:
   app-network:
