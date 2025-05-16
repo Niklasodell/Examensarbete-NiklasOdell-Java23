@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  database:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bookwishlist
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    networks:
+      - app-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://database:3306/bookwishlist
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+
+  frontend:
+    build:
+      context: ./examensarbete-niklasodell-java23-FE
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
