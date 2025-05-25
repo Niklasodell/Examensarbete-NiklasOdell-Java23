@@ -2,6 +2,7 @@ package com.examensarbete.application.controller;
 
 import com.examensarbete.application.model.User;
 import com.examensarbete.application.service.AuthService;
+import jakarta.servlet.http.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.http.*;
@@ -28,13 +29,17 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
+    public ResponseEntity<String> login(@RequestBody User user, HttpSession session) {
         if (authService.validateUser(user.getUsername(), user.getPassword())) {
+            session.setAttribute("username", user.getUsername());
+            session.setAttribute("user", authService.findUserByUsername(user.getUsername()));
             return ResponseEntity.ok("Login successful");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
     }
+
+
 }
 
 

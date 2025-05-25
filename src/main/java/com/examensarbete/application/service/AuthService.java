@@ -2,7 +2,7 @@ package com.examensarbete.application.service;
 
 import com.examensarbete.application.model.User;
 import com.examensarbete.application.repository.UserRepository;
-import jakarta.transaction.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,9 +36,8 @@ public class AuthService {
                 .map(user -> passwordEncoder.matches(rawPassword, user.getPassword()))
                 .orElse(false);
     }
+
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
+    }
 }
-
-
-
-
-

@@ -12,8 +12,8 @@ public class WishListService {
     @Autowired
     private BookRepository bookRepository;
 
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public List<Book> getBooksByUsername(String username) {
+        return bookRepository.findByUser_Username(username);
     }
 
     public Book addBook(Book book) {
@@ -34,3 +34,4 @@ public class WishListService {
         bookRepository.deleteById(id);
     }
 }
+
