@@ -2,7 +2,6 @@ package com.examensarbete.application.service;
 
 import com.examensarbete.application.model.User;
 import com.examensarbete.application.repository.UserRepository;
-import com.examensarbete.application.jwt.JwtUtil;
 import jakarta.transaction.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
