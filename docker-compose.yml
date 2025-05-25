@@ -2,15 +2,16 @@ version: '3.9'
 
 services:
   database:
-    image: mariadb:latest
+    image: postgres:15
     container_name: examensarbete-database
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: bookwishlist
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: bookwishlist
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - db-data:/var/lib/mysql
+      - pgdata:/var/lib/postgresql/data
     networks:
       - app-network
 
@@ -26,13 +27,13 @@ services:
     networks:
       - app-network
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mariadb://database:3306/bookwishlist
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/bookwishlist
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
 
 volumes:
-  db-data:
+  pgdata:
 
 networks:
   app-network:

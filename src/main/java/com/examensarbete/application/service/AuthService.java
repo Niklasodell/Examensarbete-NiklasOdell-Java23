@@ -3,6 +3,7 @@ package com.examensarbete.application.service;
 import com.examensarbete.application.model.User;
 import com.examensarbete.application.repository.UserRepository;
 import com.examensarbete.application.jwt.JwtUtil;
+import jakarta.transaction.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,12 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
     public boolean register(User user) {
+        System.out.println("Försöker spara användare: " + user.getUsername());
+
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            return false; // användarnamn redan taget
+            return false;
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
