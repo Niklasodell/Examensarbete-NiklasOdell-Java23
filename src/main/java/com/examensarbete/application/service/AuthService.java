@@ -10,25 +10,32 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-    public void register(User user) {
+    public boolean register(User user) {
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            return false; // användarnamn redan taget
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+        return true;
     }
 
-    public String login(User user) {
-        User existingUser = userRepository.findByUsername(user.getUsername()).orElseThrow();
-        if (passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
-            return JwtUtil.generateToken(existingUser.getUsername());
-        }
-        throw new RuntimeException("Invalid credentials");
+    public boolean validateUser(String username, String rawPassword) {
+        return userRepository.findByUsername(username)
+                .map(user -> passwordEncoder.matches(rawPassword, user.getPassword()))
+                .orElse(false);
     }
 }
+
+
 
 
 

@@ -6,6 +6,9 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "wishlist")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
