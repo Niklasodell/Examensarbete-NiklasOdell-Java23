@@ -39,6 +39,11 @@ public class AuthController {
         }
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletRequest request) {
+        request.getSession().invalidate();
+        return ResponseEntity.ok().build();
+    }
 
 }
 
