@@ -2,6 +2,7 @@ package com.examensarbete.application.model;
 
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
+import java.util.*;
 import lombok.*;
 
 @Getter
@@ -20,12 +21,13 @@ public class Book {
     private String author;
     private String imageUrl;
     private String status;
-    private String review;
-    private Integer rating;
-
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 }
+
