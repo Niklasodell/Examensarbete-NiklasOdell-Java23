@@ -1,5 +1,6 @@
 package com.examensarbete.application.model;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,9 +21,11 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
+    @JsonBackReference
     private Book book;
 }

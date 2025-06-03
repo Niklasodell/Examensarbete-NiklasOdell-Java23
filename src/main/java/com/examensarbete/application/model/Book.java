@@ -28,6 +28,7 @@ public class Book {
     private User user;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Review> reviews = new ArrayList<>();
 }
 
