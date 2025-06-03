@@ -20,6 +20,9 @@ public class Book {
     private String author;
     private String imageUrl;
     private String status;
+    private String review;
+    private Integer rating;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
