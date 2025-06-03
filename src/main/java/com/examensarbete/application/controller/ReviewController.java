@@ -1,5 +1,6 @@
 package com.examensarbete.application.controller;
 
+import com.examensarbete.application.dto.*;
 import com.examensarbete.application.model.Review;
 import com.examensarbete.application.model.User;
 import com.examensarbete.application.service.ReviewService;
@@ -31,9 +32,11 @@ public class ReviewController {
     }
 
     @GetMapping("/{bookId}")
-    public ResponseEntity<List<Review>> getReviews(@PathVariable Long bookId) {
-        return ResponseEntity.ok(reviewService.getReviewsByBook(bookId));
+    public ResponseEntity<List<ReviewDto>> getReviews(@PathVariable Long bookId) {
+        List<ReviewDto> reviews = reviewService.getReviewDtosByBook(bookId);
+        return ResponseEntity.ok(reviews);
     }
+
 
     @GetMapping("/{bookId}/average")
     public ResponseEntity<Double> getAverage(@PathVariable Long bookId) {

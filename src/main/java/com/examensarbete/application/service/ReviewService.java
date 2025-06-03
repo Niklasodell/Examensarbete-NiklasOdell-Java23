@@ -1,5 +1,6 @@
 package com.examensarbete.application.service;
 
+import com.examensarbete.application.dto.*;
 import com.examensarbete.application.model.*;
 import com.examensarbete.application.repository.*;
 import org.springframework.stereotype.Service;
@@ -47,5 +48,16 @@ public class ReviewService {
                 .mapToInt(Review::getRating)
                 .average()
                 .orElse(0.0);
+    }
+
+    public List<ReviewDto> getReviewDtosByBook(Long bookId) {
+        return reviewRepository.findByBookId(bookId).stream()
+                .map(review -> new ReviewDto(
+                        review.getId(),
+                        review.getReviewText(),
+                        review.getRating(),
+                        review.getUser().getUsername()
+                ))
+                .toList();
     }
 }
