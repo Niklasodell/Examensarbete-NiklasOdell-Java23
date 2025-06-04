@@ -8,4 +8,5 @@ import org.springframework.stereotype.*;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findByUser_Username(String username);
+    List<Book> findByTitle(String title);
 }
