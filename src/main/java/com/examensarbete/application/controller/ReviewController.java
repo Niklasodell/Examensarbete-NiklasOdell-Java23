@@ -1,6 +1,6 @@
 package com.examensarbete.application.controller;
 
-import com.examensarbete.application.dto.*;
+import com.examensarbete.application.dto.ReviewDto;
 import com.examensarbete.application.model.Review;
 import com.examensarbete.application.model.User;
 import com.examensarbete.application.service.ReviewService;
@@ -37,9 +37,19 @@ public class ReviewController {
         return ResponseEntity.ok(reviews);
     }
 
-
     @GetMapping("/{bookId}/average")
     public ResponseEntity<Double> getAverage(@PathVariable Long bookId) {
         return ResponseEntity.ok(reviewService.getAverageRating(bookId));
+    }
+
+    @DeleteMapping("/{reviewId}")
+    public ResponseEntity<Void> deleteReview(@PathVariable Long reviewId, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return ResponseEntity.status(401).build();
+        }
+
+        reviewService.deleteReview(reviewId, user.getId());
+        return ResponseEntity.noContent().build();
     }
 }

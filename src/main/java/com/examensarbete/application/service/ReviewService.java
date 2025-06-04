@@ -60,4 +60,13 @@ public class ReviewService {
                 ))
                 .toList();
     }
+
+    public void deleteReview(Long reviewId, Long userId) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new RuntimeException("Review not found"));
+        if (!review.getUser().getId().equals(userId)) {
+            throw new RuntimeException("You can only delete your own review");
+        }
+        reviewRepository.delete(review);
+    }
 }

@@ -5,7 +5,6 @@ import lombok.*;
 @Getter
 @Setter
 public class ReviewDto {
-
     private Long id;
     private String reviewText;
     private int rating;
