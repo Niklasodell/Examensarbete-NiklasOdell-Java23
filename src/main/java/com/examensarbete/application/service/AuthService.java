@@ -37,4 +37,10 @@ public class AuthService {
     public User findUserByUsername(String username) {
         return userRepository.findByUsernameIgnoreCase(username).orElse(null);
     }
+
+    @Transactional
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+
 }

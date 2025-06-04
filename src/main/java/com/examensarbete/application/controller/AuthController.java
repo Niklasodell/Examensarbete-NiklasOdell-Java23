@@ -45,6 +45,17 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteUser(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Du måste vara inloggad.");
+        }
+        authService.deleteUser(user.getId());
+        session.invalidate();
+        return ResponseEntity.ok("Ditt konto har tagits bort.");
+    }
+
 }
 
 
