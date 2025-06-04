@@ -11,7 +11,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
     networks:
       - app-network
 
@@ -33,7 +33,7 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
 
 volumes:
-  pgdata:
+  postgres-data:
 
 networks:
   app-network:
