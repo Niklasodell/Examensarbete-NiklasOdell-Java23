@@ -56,6 +56,13 @@ public class AuthController {
         return ResponseEntity.ok("Ditt konto har tagits bort.");
     }
 
+    @GetMapping("/check-session")
+    public ResponseEntity<Void> checkSession(HttpSession session) {
+        if (session.getAttribute("user") != null) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
 }
 
 
